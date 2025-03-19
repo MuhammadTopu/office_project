@@ -20,14 +20,12 @@ conn(); // Connect to Prisma
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // ✅ Enable CORS to allow frontend requests
   app.enableCors({
-    origin: 'http://localhost:5173', // Your frontend URL
-    allowedHeaders: ['Content-Type', 'Authorization', 'id'], // Include 'id' header
+    origin: 'http://localhost:5173',
+    allowedHeaders: ['Content-Type', 'Authorization', 'id'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   });
 
-  // ✅ Global Validation Pipes
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
