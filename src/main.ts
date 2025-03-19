@@ -7,8 +7,9 @@ const prisma = new PrismaClient();
 
 async function conn() {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const user = await prisma.user.findMany();
-    console.log(user);
+    // console.log(user);
     console.log('Connected to Prisma successfully');
   } catch (error) {
     console.error('Prisma connection error:', error);
