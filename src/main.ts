@@ -24,6 +24,9 @@ async function bootstrap() {
     origin: [
       'http://localhost:5173',
       'https://task-management-467k0j5i7-kamran-hossain-topus-projects.vercel.app',
+      'https://task-management-gray-ten.vercel.app',
+      'https://task-management-git-main-kamran-hossain-topus-projects.vercel.app',
+      'https://task-management-kamran-hossain-topus-projects.vercel.app',
     ],
     allowedHeaders: ['Content-Type', 'Authorization', 'id'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
