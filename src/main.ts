@@ -23,7 +23,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:5173',
-      'https://task-management-git-main-kamran-hossain-topus-projects.vercel.app',
+      'https://task-management-gray-ten.vercel.app',
     ],
     allowedHeaders: ['Content-Type', 'Authorization', 'id'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
