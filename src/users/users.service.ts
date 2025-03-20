@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { CreateUserDTO } from './create-user-dto';
 import { signUpResponse } from './User';
 import * as bcrypt from 'bcrypt';
@@ -14,6 +14,7 @@ const saltRounds = 10;
 
 @Injectable()
 export class UsersService {
+  [x: string]: any;
   prisma: PrismaClient;
   constructor(private readonly jwtService: JwtService) {}
   async signup(payload: CreateUserDTO): Promise<signUpResponse> {
@@ -72,5 +73,13 @@ export class UsersService {
   async decpass(plaintext, hash) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await bcrypt.compare(plaintext, hash);
+  }
+  async findUserById(userId: string): Promise<User | null> {
+    const user = await this.userRepository.findUnique({
+      where: { id: userId },
+      select: { id: true, email: true, name: true },
+    });
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return user;
   }
 }

@@ -42,7 +42,7 @@ export class AuthGuard implements CanActivate {
 
   private extractTokenFromHeader(request: Request): string | undefined {
     const authHeader = request.headers.authorization;
-    console.log('Authorization Header:', authHeader);  // Log the authorization header
+    // console.log('Authorization Header:', authHeader);  // Log the authorization header
 
     if (!authHeader) {
       console.log('Authorization header is missing');

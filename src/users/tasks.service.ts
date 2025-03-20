@@ -25,17 +25,16 @@ export class TasksService {
 
   async getTasks(userId: string) {
     try {
-      // Fetch tasks where userId matches and order them by creation date (descending)
       const tasks = await this.prisma.task.findMany({
         where: {
-          userId, // Filter tasks by userId
+          userId,
         },
         orderBy: {
-          createdAt: 'desc', // Sort tasks by creation date (most recent first)
+          createdAt: 'desc',
         },
       });
 
-      return tasks; // Return the list of tasks
+      return tasks;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       throw new Error('Error fetching tasks');
@@ -78,5 +77,58 @@ export class TasksService {
       where: { userId, complete: false },
       orderBy: { createdAt: 'desc' },
     });
+  }
+
+  async updateImportantStatus(taskId: string, userId: string) {
+    const task = await this.prisma.task.findUnique({
+      where: { id: taskId, userId },
+    });
+
+    if (!task) throw new NotFoundException('Task not found');
+
+    // Toggle the 'important' status
+    task.important = !task.important;
+
+    await this.prisma.task.update({
+      where: { id: taskId },
+      data: { important: task.important },
+    });
+
+    return task;
+  }
+
+  async updateCompleteStatus(taskId: string, userId: string) {
+    const task = await this.prisma.task.findUnique({
+      where: { id: taskId, userId },
+    });
+
+    if (!task) throw new NotFoundException('Task not found');
+
+    // Toggle the 'complete' status
+    task.complete = !task.complete;
+
+    await this.prisma.task.update({
+      where: { id: taskId },
+      data: { complete: task.complete },
+    });
+
+    return task;
+  }
+
+  async updateIncompleteStatus(taskId: string, userId: string) {
+    const task = await this.prisma.task.findUnique({
+      where: { id: taskId, userId },
+    });
+
+    if (!task) throw new NotFoundException('Task not found');
+
+    task.complete = !task.complete;
+
+    await this.prisma.task.update({
+      where: { id: taskId },
+      data: { complete: task.complete },
+    });
+
+    return task;
   }
 }
